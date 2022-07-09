@@ -1,21 +1,25 @@
 import React, { useContext } from 'react';
 import ContextStarWars from '../context/ContextStarWars';
 import './Table.css';
+import Loading from './Loading';
 
 function Table() {
-  const { data } = useContext(ContextStarWars);
+  const { isLoading, data, filterByName } = useContext(ContextStarWars);
 
-  return (
+  const filterByText = () => data
+    .filter((planet) => planet.name.includes(filterByName.name));
+
+  return isLoading ? <Loading /> : data.length && (
     <div className="table">
       <table>
         <thead>
           <tr>
-            {data.length && Object.keys(data[0])
+            {Object.keys(data[0])
               .map((title) => <th key={ title }>{title}</th>) }
           </tr>
         </thead>
         <tbody>
-          {data.length && data.map((planet) => (
+          {filterByText().map((planet) => (
             <tr key={ planet.name }>
               { Object.values(planet)
                 .map((value) => <td key={ value }>{value}</td>)}
