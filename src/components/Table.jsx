@@ -4,10 +4,33 @@ import './Table.css';
 import Loading from './Loading';
 
 function Table() {
-  const { isLoading, data, filterByName } = useContext(ContextStarWars);
+  const { isLoading, data, filterByName,
+    filterByNumericValues } = useContext(ContextStarWars);
 
   const filterByText = () => data
     .filter((planet) => planet.name.includes(filterByName.name));
+
+  const applyFilter = (filter, array) => {
+    const { column, comparison, value } = filter;
+    if (comparison === 'maior que') {
+      return array.filter((item) => Number(item[column]) > Number(value));
+    }
+    if (comparison === 'menor que') {
+      return array.filter((item) => Number(item[column]) < Number(value));
+    }
+    if (comparison === 'igual a') {
+      return array.filter((item) => Number(item[column]) === Number(value));
+    }
+    return array;
+  };
+
+  const filterByNumbers = (dataPlanets) => {
+    let planetsFiltered = dataPlanets;
+    filterByNumericValues.forEach((filter) => {
+      planetsFiltered = applyFilter(filter, planetsFiltered);
+    });
+    return planetsFiltered;
+  };
 
   return isLoading ? <Loading /> : data.length && (
     <div className="table">
@@ -19,7 +42,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterByText().map((planet) => (
+          {filterByNumbers(filterByText()).map((planet) => (
             <tr key={ planet.name }>
               { Object.values(planet)
                 .map((value) => <td key={ value }>{value}</td>)}
