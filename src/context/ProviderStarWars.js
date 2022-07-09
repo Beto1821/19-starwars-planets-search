@@ -6,6 +6,11 @@ function ProviderStarWars({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [filterByName, setfilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  });
 
   useEffect(() => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -28,6 +33,8 @@ function ProviderStarWars({ children }) {
     data,
     filterByName,
     setfilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   return (
