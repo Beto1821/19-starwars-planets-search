@@ -7,7 +7,7 @@ function FilterByNum() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
-  const { setFilterByNumericValues } = useContext(ContextStarWars);
+  const { setFilterByNumericValues, filterByNumericValues } = useContext(ContextStarWars);
 
   const addNumericFilter = (Filter) => {
     setFilterByNumericValues([...filterByNumericValues, Filter]);
