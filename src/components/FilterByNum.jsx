@@ -7,7 +7,11 @@ function FilterByNum() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
-  const { addNumericFilter } = useContext(ContextStarWars);
+  const { setFilterByNumericValues } = useContext(ContextStarWars);
+
+  const addNumericFilter = (Filter) => {
+    setFilterByNumericValues([...filterByNumericValues, Filter]);
+  };
 
   const columnlist = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];

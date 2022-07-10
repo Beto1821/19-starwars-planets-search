@@ -23,10 +23,6 @@ function ProviderStarWars({ children }) {
     getPlanets();
   }, []);
 
-  const addNumericFilter = (Filter) => {
-    setFilterByNumericValues([...filterByNumericValues, Filter]);
-  };
-
   const context = {
     isLoading,
     data,
@@ -34,7 +30,6 @@ function ProviderStarWars({ children }) {
     setfilterByName,
     filterByNumericValues,
     setFilterByNumericValues,
-    addNumericFilter,
   };
 
   return (
