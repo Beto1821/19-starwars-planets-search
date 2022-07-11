@@ -18,10 +18,8 @@ function Table() {
     if (comparison === 'menor que') {
       return array.filter((item) => Number(item[column]) < Number(value));
     }
-    if (comparison === 'igual a') {
-      return array.filter((item) => Number(item[column]) === Number(value));
-    }
-    return array;
+
+    return array.filter((item) => Number(item[column]) === Number(value));
   };
 
   const filterByNumbers = (dataPlanets) => {
