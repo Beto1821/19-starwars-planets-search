@@ -47,7 +47,7 @@ describe('Testes de apgina', () => {
   });
 
 
-  test('Testes menor que', async () => {
+  test('Testes filtros', async () => {
     const column = screen.getByTestId('column-filter');
     const comparison =screen.getByTestId('comparison-filter')
     const value = screen.getByTestId('value-filter')
@@ -83,7 +83,7 @@ describe('Testes de apgina', () => {
 
   });
 
-  test('Testes filtros', async () => {
+  test('Testes menor que', async () => {
 
     const column = screen.getByTestId('column-filter');
     const comparison =screen.getByTestId('comparison-filter')
@@ -96,17 +96,27 @@ describe('Testes de apgina', () => {
     userEvent.type(value, '1000000')
     userEvent.click(btnFilter);
 
-    expect(await screen.findAllByRole('row')).toHaveLength(3)
+    screen.queryByText(/population menor que 020/i)
+    expect(screen.queryAllByRole('row')).toHaveLength(3)
+  });
 
+    test('Testes maior que', async () => {
+
+    const column = screen.getByTestId('column-filter');
+    const comparison =screen.getByTestId('comparison-filter')
+    const value = screen.getByTestId('value-filter')
+    const btnFilter = screen.getByTestId('button-filter')
+    
     userEvent.click(column)
-    userEvent.click(screen.getByRole('option', {name:'rotation_period'}))
+    userEvent.click(screen.getByRole('option', {name:'population'})) 
 
     userEvent.click(comparison)
-    userEvent.click(screen.getByRole('option', {name: 'menor que'}))
+    userEvent.click(screen.getByRole('option', {name:'maior que'}))
 
-    userEvent.type(value, '20')
-    userEvent.click(btnFilter)
-    screen.queryByText(/population menor que 020/i)
-    expect( screen.queryAllByRole('row')).toHaveLength(3)
+    userEvent.type(value, '1000000')
+    userEvent.click(btnFilter);
+
+    expect(screen.queryAllByRole('row')).toHaveLength(7)
   });
+
   });

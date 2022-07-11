@@ -3,18 +3,22 @@ import ContextStarWars from '../context/ContextStarWars';
 import './FilterByNum.css';
 
 function FilterByNum() {
+  const columnlist = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
+
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [newOptions, setNewOptions] = useState(columnlist);
 
   const { setFilterByNumericValues, filterByNumericValues } = useContext(ContextStarWars);
 
   const addNumericFilter = (Filter) => {
     setFilterByNumericValues([...filterByNumericValues, Filter]);
+    setNewOptions((oldOptions) => oldOptions.filter((item) => item !== column));
+    console.log(newOptions);
+    setColumn(newOptions[0]);
   };
-
-  const columnlist = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
 
   const comparisonList = ['maior que', 'menor que', 'igual a'];
 
@@ -26,7 +30,7 @@ function FilterByNum() {
         value={ column }
         onChange={ (event) => setColumn(event.target.value) }
       >
-        {columnlist.map((item) => (
+        {newOptions.map((item) => (
           <option
             key={ item }
             value={ item }
