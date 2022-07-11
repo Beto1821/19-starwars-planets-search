@@ -29,7 +29,6 @@ function Table() {
     filterByNumericValues.forEach((filter) => {
       planetsFiltered = applyFilter(filter, planetsFiltered);
     });
-    console.log(planetsFiltered);
     return planetsFiltered;
   };
 
