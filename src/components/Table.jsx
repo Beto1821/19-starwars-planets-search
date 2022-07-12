@@ -24,10 +24,12 @@ function Table() {
 
   const filterByNumbers = (dataPlanets) => {
     let planetsFiltered = dataPlanets;
+
     filterByNumericValues.forEach((filter) => {
       planetsFiltered = applyFilter(filter, planetsFiltered);
     });
-    // console.log(planetsFiltered);
+
+    console.log(planetsFiltered);
     return planetsFiltered;
   };
 

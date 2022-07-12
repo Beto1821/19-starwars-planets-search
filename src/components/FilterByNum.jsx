@@ -64,6 +64,7 @@ function FilterByNum() {
       />
 
       <button
+        className="btn btn-outline btn-warning"
         data-testid="button-filter"
         type="button"
         onClick={ () => addNumericFilter({ column, comparison, value }) }
