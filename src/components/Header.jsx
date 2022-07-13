@@ -10,6 +10,7 @@ function Header() {
       <div className="input">
         <div>Projeto Star Wars - Tyrbe</div>
         <input
+          className="input input-bordered input-error w-full max-w-xs"
           type="text"
           data-testid="name-filter"
           value={ filterByName.name }

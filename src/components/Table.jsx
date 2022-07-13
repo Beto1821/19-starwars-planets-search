@@ -35,7 +35,7 @@ function Table() {
 
   return isLoading ? <Loading /> : data.length && (
     <div className="table">
-      <table>
+      <table className="table-zebra">
         <thead>
           <tr>
             {Object.keys(data[0])
