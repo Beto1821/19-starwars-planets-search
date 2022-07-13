@@ -21,18 +21,19 @@ describe('Testes de apgina', () => {
   }); 
    test('Testes de input, checkbox e botão', () => {
     const name = screen.getByTestId('name-filter');
-   const column = screen.getByTestId('column-filter');
-   const comparison =screen.getByTestId('comparison-filter')
-   const value = screen.getByTestId('value-filter')
-   const btnFilter = screen.getByTestId('button-filter')
-   const table = screen.getByRole('table')
+    const column = screen.getByTestId('column-filter');
+    const comparison =screen.getByTestId('comparison-filter')
+    const value = screen.getByTestId('value-filter')
+    const btnFilter = screen.getByTestId('button-filter')
+    const table = screen.getByRole('table')
+    const resetGeral = screen.getByTestId('button-remove-filters')
     expect(column).toBeInTheDocument();
     expect(name).toBeInTheDocument();
     expect(table).toBeInTheDocument();
     expect(comparison).toBeInTheDocument()
     expect(value).toBeInTheDocument()
     expect(btnFilter).toBeInTheDocument()
-
+    expect(resetGeral).toBeInTheDocument()
 
   });
 
@@ -117,6 +118,47 @@ describe('Testes de apgina', () => {
     userEvent.click(btnFilter);
 
     expect(screen.queryAllByRole('row')).toHaveLength(7)
+  });
+    test('Testes maior que', async () => {
+
+    const column = screen.getByTestId('column-filter');
+    const comparison =screen.getByTestId('comparison-filter')
+    const value = screen.getByTestId('value-filter')
+    const btnFilter = screen.getByTestId('button-filter')
+    
+    userEvent.click(column)
+    userEvent.click(screen.getByRole('option', {name:'population'})) 
+
+    userEvent.click(comparison)
+    userEvent.click(screen.getByRole('option', {name:'maior que'}))
+
+    userEvent.type(value, '1000000')
+    userEvent.click(btnFilter);
+
+    const del = screen.getByTestId('filter')
+    screen.getAllByText(/remove/i)
+
+    userEvent.click(del)
+  });
+    test('Testando REMOVE FILTERS', async () => {
+    const column = screen.getByTestId('column-filter');
+    const comparison =screen.getByTestId('comparison-filter')
+    const value = screen.getByTestId('value-filter')  
+    const filters =  screen.queryByTestId('button-remove-filters')
+
+    userEvent.click(column)
+    userEvent.click(screen.getByRole('option', {name:'population'})) 
+
+    userEvent.click(comparison)
+    userEvent.click(screen.getByRole('option', {name:'maior que'}))
+
+    userEvent.type(value, '1000000')
+    userEvent.click(filters);
+  
+
+    fireEvent.click(await screen.findByTestId('button-filter'));
+
+    expect(await screen.findAllByRole('row')).toHaveLength(7);
   });
 
   });

@@ -29,7 +29,7 @@ function Table() {
       planetsFiltered = applyFilter(filter, planetsFiltered);
     });
 
-    console.log(planetsFiltered);
+    // console.log(planetsFiltered);
     return planetsFiltered;
   };
 

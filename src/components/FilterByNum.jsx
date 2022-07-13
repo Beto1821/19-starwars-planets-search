@@ -10,17 +10,34 @@ function FilterByNum() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [newOptions, setNewOptions] = useState(columnlist);
+  const [options, setOptions] = useState(columnlist);
 
   const { setFilterByNumericValues, filterByNumericValues } = useContext(ContextStarWars);
+  const comparisonList = ['maior que', 'menor que', 'igual a'];
 
   const addNumericFilter = (Filter) => {
     setFilterByNumericValues([...filterByNumericValues, Filter]);
     setNewOptions((oldOptions) => oldOptions.filter((item) => item !== column));
-    console.log(newOptions);
+    // console.log(newOptions);
     setColumn(newOptions[0]);
   };
 
-  const comparisonList = ['maior que', 'menor que', 'igual a'];
+  const removeFilter = ({ target: { name } }) => {
+    const delOptions = [...options, name];
+
+    setOptions(delOptions);
+    setColumn(delOptions[0]);
+    setFilterByNumericValues((oldList) => {
+      console.log(oldList, name);
+      return oldList.filter((e) => e.column !== name);
+    });
+  };
+
+  const resetFilters = () => {
+    setFilterByNumericValues([]);
+    setOptions(filterByNumericValues);
+    setColumn('population');
+  };
 
   return (
     <form>
@@ -69,8 +86,30 @@ function FilterByNum() {
         type="button"
         onClick={ () => addNumericFilter({ column, comparison, value }) }
       >
-        FILTRAR
+        FILTERS
       </button>
+      <button
+        className="btn btn-outline btn-warning"
+        data-testid="button-remove-filters"
+        type="button"
+        onClick={ resetFilters }
+      >
+        REMOVE FILTERS
+      </button>
+      <div className="filtros">
+        { filterByNumericValues.map((item, index) => (
+          <span key={ index } data-testid="filter">
+            {`${item.column} ${item.comparison} ${item.value}`}
+            <button
+              type="button"
+              onClick={ removeFilter }
+              name={ item.column }
+            >
+              Remove
+            </button>
+          </span>
+        ))}
+      </div>
     </form>
   );
 }
